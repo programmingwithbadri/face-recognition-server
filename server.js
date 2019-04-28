@@ -62,6 +62,20 @@ app.get('/profiles/:id', (req, res) => {
         : res.status('404').json("User profile not found");
 })
 
+app.put('/entries', (req, res) => {
+    const { id } = req.body;
+    const user = database.users.find((user) => {
+        if(user.id == id) {
+           return user.entries++;
+        }
+    });
+
+    user
+        ? res.json(user.entries)
+        : res.status('404').json("User profile not found");
+
+})
+
 app.listen(3001, () => {
     console.log("Server is up");
 });

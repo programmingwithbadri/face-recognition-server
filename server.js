@@ -48,7 +48,18 @@ app.post('/register', (req, res) => {
         joined: new Date()
     });
 
-    res.json(database.users[database.users.length-1]);
+    res.json(database.users[database.users.length - 1]);
+})
+
+app.get('/profiles/:id', (req, res) => {
+    const { id } = req.params;
+
+    // Checking for == since the id will be string in the params
+    const userProfile = database.users.find(user => user.id == id);
+
+    userProfile
+        ? res.json(userProfile)
+        : res.status('404').json("User profile not found");
 })
 
 app.listen(3001, () => {

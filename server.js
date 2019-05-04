@@ -79,16 +79,13 @@ app.get('/profiles/:id', (req, res) => {
 
 app.put('/entries', (req, res) => {
     const { id } = req.body;
-    const user = database.users.find((user) => {
-        if(user.id == id) {
-           return user.entries++;
-        }
-    });
-
-    user
-        ? res.json(user.entries)
-        : res.status('404').json("User profile not found");
-
+    db('users').where('id', '=', id)
+    .increment('entries', 1)
+    .returning('entries')
+    .then(entries => {
+        res.json(entries[0])
+    })
+    .catch(()=> res.status('400').json('Error getting user entries'));
 })
 
 app.listen(3001, () => {

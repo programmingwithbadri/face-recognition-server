@@ -65,13 +65,16 @@ app.post('/register', (req, res) => {
 
 app.get('/profiles/:id', (req, res) => {
     const { id } = req.params;
-
-    // Checking for == since the id will be string in the params
-    const userProfile = database.users.find(user => user.id == id);
-
-    userProfile
-        ? res.json(userProfile)
-        : res.status('404').json("User profile not found");
+    db.select('*').from('users').where({
+        id: id
+    }).then(userProfile =>{
+        console.log(userProfile)
+        if(userProfile.length){
+            res.json(userProfile[0])
+        } else {
+            res.status('404').json("User profile not found");
+        }
+    }).catch(() => res.status('500').json("Error getting the user profile"));
 })
 
 app.put('/entries', (req, res) => {

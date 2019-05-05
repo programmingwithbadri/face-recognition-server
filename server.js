@@ -4,8 +4,9 @@ const cors = require("cors");
 const knex = require('knex');
 const bcrypt = require('bcrypt-nodejs');
 const register = require('./controllers/register.js');
-const signin = require('./controllers/signin.js')
-const user = require('./controllers/user.js')
+const signin = require('./controllers/signin.js');
+const user = require('./controllers/user.js');
+const image = require('./controllers/image.js')
 
 const app = express();
 
@@ -31,5 +32,7 @@ app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt
 app.get('/profiles/:id', (req, res) => user.getUserProfile(req, res, db));
 
 app.put('/entries', (req, res) => user.getUserEntries(req, res, db));
+
+app.post('/imageUrl', (req, res) => image.handleApiCall(req, res));
 
 app.listen(3001, () => console.log("Server is up"));

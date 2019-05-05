@@ -1,5 +1,10 @@
 const getUserProfile = (req, res, db) => {
     const { id } = req.params;
+    if(!id)
+    {
+        return res.status(404).json("Incorrect form submission")
+    }
+
     db.select('*').from('users').where({
         id: id
     }).then(userProfile => {
@@ -14,6 +19,11 @@ const getUserProfile = (req, res, db) => {
 
 const getUserEntries = (req, res, db) => {
     const { id } = req.body;
+    if(!id)
+    {
+        return res.status(404).json("Incorrect form submission")
+    }
+    
     db('users').where('id', '=', id)
         .increment('entries', 1)
         .returning('entries')

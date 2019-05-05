@@ -35,4 +35,4 @@ app.put('/entries', (req, res) => user.getUserEntries(req, res, db));
 
 app.post('/imageUrl', (req, res) => image.handleApiCall(req, res));
 
-app.listen(3001, () => console.log("Server is up"));
+app.listen(process.env.PORT || 3000, () => console.log("Server is up"));

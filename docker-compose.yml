@@ -10,3 +10,8 @@ services:
       - "3000:3000"
     volumes: 
       - ./:/usr/src/smart-brain-api
+  
+  postgres:
+    image: postgres
+    ports: 
+      - "5432:5432"

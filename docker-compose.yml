@@ -6,6 +6,10 @@ services:
     build: ./
     command: npm start
     working_dir: /usr/src/smart-brain-api
+    environment: 
+      DATABASE_URL: postgres://bncbeetdhgfdkv:f3518e30beb5353d7861458a0401166a888c9cd917b626e435f9cad94fdd09b6@ec2-54-225-116-36.compute-1.amazonaws.com:5432/dd8s8avse6v6t
+    links:
+      - postgres
     ports:
       - "3000:3000"
     volumes: 
@@ -13,5 +17,10 @@ services:
   
   postgres:
     image: postgres
+    environment: 
+      POSTGRES_USER: bncbeetdhgfdkv
+      POSTGRES_PASSWORD: f3518e30beb5353d7861458a0401166a888c9cd917b626e435f9cad94fdd09b6
+      POSTGRES_DB: dd8s8avse6v6t
+      POSTGRES_HOST: ec2-54-225-116-36.compute-1.amazonaws.com
     ports: 
       - "5432:5432"

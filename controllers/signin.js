@@ -9,7 +9,7 @@ const handleSigninAuthentication = (db, bcrypt) => (req, res) => {
     // Gets the JWT token in req header 
     const { authorization } = req.headers;
     return authorization
-        ? getAuthTokenId()
+        ? getAuthTokenId(req, res)
         : handleSignin(req, res, db, bcrypt)
             .then(data => {
                 return data.id && data.email
@@ -42,8 +42,15 @@ const handleSignin = (req, res, db, bcrypt) => {
         .catch(() => Promise.reject('Wrong credentials'))
 }
 
-const getAuthTokenId = () => {
-    console.log('Auth Ok')
+const getAuthTokenId = (req, res) => {
+    const authorization = req.headers;
+    return redisClient.get(authorization, (err, reply) => {
+        if (err || !reply) {
+            return res.status(400).json('Unauthorized');
+        }
+
+        return res.json({ id: reply });
+    })
 }
 
 const createSessions = (user) => {

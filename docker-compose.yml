@@ -8,8 +8,10 @@ services:
     working_dir: /usr/src/smart-brain-api
     environment: 
       DATABASE_URL: postgres://bncbeetdhgfdkv:f3518e30beb5353d7861458a0401166a888c9cd917b626e435f9cad94fdd09b6@ec2-54-225-116-36.compute-1.amazonaws.com:5432/dd8s8avse6v6t
+      REDIS_URL: redis://h:pf28fc7beb2dfd311c3958f0374db41ac9be2c1feb6cef9e1f7277daff4007a63@ec2-34-200-118-77.compute-1.amazonaws.com:13489
     links:
       - postgres
+      - redis
     ports:
       - "3000:3000"
     volumes: 
@@ -24,3 +26,8 @@ services:
       POSTGRES_HOST: ec2-54-225-116-36.compute-1.amazonaws.com
     ports: 
       - "5432:5432"
+  
+  redis:
+    image: redis
+    posts:
+      - "6379:13489"

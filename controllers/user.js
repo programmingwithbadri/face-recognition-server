@@ -39,4 +39,19 @@ const getUsers = (req, res, db) => {
         .catch(() => res.status(404).json("No users exists!"))
 }
 
-module.exports = { getUserProfile, getUserEntries, getUsers };
+const updateUserProfile = (req, res, db) => {
+    const { id } = req.params;
+    const { name } = req.body.formInput;
+    
+    db('users').where({id})
+    .update({name}) 
+    .then(resp => {
+        if (resp) {
+            res.json("Updated successfully")
+        } else {
+            res.status('400').json('Unable to update');
+        }
+    }).catch(() => res.status('400').json("Error updating the user profile"));
+}
+
+module.exports = { getUserProfile, getUserEntries, getUsers, updateUserProfile };

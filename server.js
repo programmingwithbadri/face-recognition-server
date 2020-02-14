@@ -30,6 +30,8 @@ app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt
 
 app.get('/profiles/:id', (req, res) => user.getUserProfile(req, res, db));
 
+app.post('/profiles/:id', (req, res) => user.updateUserProfile(req, res, db));
+
 app.put('/entries', (req, res) => user.getUserEntries(req, res, db));
 
 app.post('/imageUrl', (req, res) => image.handleApiCall(req, res));

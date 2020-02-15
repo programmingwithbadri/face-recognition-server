@@ -4,8 +4,7 @@ const redis = require('redis');
 // Setup redis
 const redisClient = redis.createClient(process.env.REDIS_URL);
 
-// Higher order function
-const handleSigninAuthentication = (db, bcrypt) => (req, res) => {
+const handleSigninAuthentication = (req, res, db, bcrypt) => {
     // Gets the JWT token in req header 
     const { authorization } = req.headers;
     return authorization

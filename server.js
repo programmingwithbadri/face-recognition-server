@@ -10,6 +10,8 @@ const image = require('./controllers/image.js')
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -24,7 +26,7 @@ const db = knex({
 
 app.get('/', (req, res) => user.getUsers(req, res, db));
 
-app.post('/signin', (req, res) => signin.handleSigninAuthentication(db, bcrypt));
+app.post('/signin', (req, res) => signin.handleSigninAuthentication(req, res, db, bcrypt));
 
 app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt));
 
@@ -36,4 +38,4 @@ app.put('/entries', (req, res) => user.getUserEntries(req, res, db));
 
 app.post('/imageUrl', (req, res) => image.handleApiCall(req, res));
 
-app.listen(process.env.PORT || 3000, () => console.log("Server is up"));
+app.listen(port, () => console.log(`Server is listening at port ${port}`));

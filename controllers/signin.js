@@ -45,7 +45,7 @@ const getAuthTokenId = (req, res) => {
     const { authorization } = req.headers;
     return redisClient.get(authorization, (err, reply) => {
         if (err || !reply) {
-            return res.status(400).json('Unauthorized');
+            return res.status(401).json('Unauthorized');
         }
 
         return res.json({ id: reply });
@@ -77,5 +77,6 @@ const signToken = (data) => {
 }
 
 module.exports = {
-    handleSigninAuthentication
+    handleSigninAuthentication,
+    redisClient
 };
